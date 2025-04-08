@@ -1,4 +1,4 @@
-# Task Tracker CLI - PHP Application (Inspired by roadmap.sh)
+# GitHub User Activity - PHP Application (Inspired by roadmap.sh)
 
 A simple and lightweight command line tool **(With File Based Caching System)** to fetch and display the recent public activity of any GitHub user.
 Built in pure PHP without any external libraries — fast, clean, and effective.
