@@ -23,9 +23,9 @@ Built in pure PHP without any external libraries — fast, clean, and effective.
    git clone https://github.com/mdahanaf/GitHub-User-Activity.git
    ```
 
-2. And done. Now you can easily add your first task via CLI 🚀
-     - For example
-         ```bash
-        php github-activity <your_username>
-         ```
+2. And done. Now you can easily get github events from CLI 🚀
+
+    ```bash
+    php github-activity <your_username>
+    ```
   
