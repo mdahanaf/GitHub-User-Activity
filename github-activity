@@ -1,0 +1,64 @@
+#!/usr/bin/env php
+<?php
+
+
+$argc = $_SERVER['argc'];
+$argv = $_SERVER['argv'];
+
+if($argc != 2){
+    echo "Please enter your github username.";
+    die();
+}
+[$file_name, $username] = $argv;
+
+if(file_exists(__DIR__. "/cache_$username.txt")){
+    echo file_get_contents(__DIR__. "/cache_$username.txt")."\n";
+    die();
+}
+
+
+$curl = curl_init();
+
+$github = "https://api.github.com/users/$username/events";
+curl_setopt($curl, CURLOPT_URL, $github);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_USERAGENT, "Ahanaf/1.0");
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+
+$data = json_decode($response, true);
+
+if(isset($data['message'])){
+    echo "Wrong username or api failure. Try again.";
+    die();
+}
+
+$file_data = "";
+foreach($data as $d){
+    if($d['type'] == "PushEvent"){
+        $file_data .= "Pushed a commit to ". $d['repo']['name']. "\n";
+    }else if($d['type'] == 'IssueCommentEvent'){
+        $file_data .=  $d['payload']['action']. " to ". $d['repo']['name']. "\n";
+    }else if($d['type'] == "IssuesEvent"){
+        $file_data .=  $d['payload']['action']. " to ". $d['repo']['name']. "\n";
+    }else if($d['type'] == "CreateEvent"){
+        $file_data .=  "Created this ". $d['repo']['name']. "\n";
+    }else if($d['type'] == 'PullRequestEvent'){
+        $file_data .=  $d['payload']['action']. " to ". $d['repo']['name']. "\n";
+    }else if($d['type'] == 'WatchEvent'){
+        $file_data .=  $d['payload']['action']. " to ". $d['repo']['name']. "\n";
+    }else if($d['type'] == "DeleteEvent"){
+        $file_data .=  "deleted this repo". $d['repo']['name']. "\n";
+    }else if($d['type'] == 'PullRequestReviewCommentEvent'){
+        $file_data .=  $d['payload']['action']. " to ". $d['repo']['name']. "\n";
+    }
+    else{
+        $file_data .=  "Unknown event\n";
+    }
+}
+
+file_put_contents(__DIR__. "/cache_$username.txt", $file_data);
+echo $file_data;
+
