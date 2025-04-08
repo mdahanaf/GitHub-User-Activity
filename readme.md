@@ -20,7 +20,7 @@ Built in pure PHP without any external libraries — fast, clean, and effective.
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/mdahanaf/tasks-cli.git
+   git clone https://github.com/mdahanaf/GitHub-User-Activity.git
    ```
 
 2. And done. Now you can easily add your first task via CLI 🚀
